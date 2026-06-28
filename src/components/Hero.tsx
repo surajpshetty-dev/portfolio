@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowDown, Mail, FileText } from 'lucide-react';
 import LinkedInIcon from '@/components/icons/LinkedInIcon';
 import { SITE_EMAIL, LINKEDIN_URL } from '@/data/constants';
+import { track } from '@vercel/analytics';
 
 const ROLES = ['Data Engineering Lead', 'Platform Architect', 'AI/LLM Builder', 'Data Engineering & AI Lead'];
 
@@ -116,17 +117,20 @@ export default function Hero({ showCv = false }: { showCv?: boolean }) {
           className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-16"
         >
           <a href={`mailto:${SITE_EMAIL}`}
+            onClick={() => track('email_click', { location: 'hero' })}
             className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold text-white transition-all duration-200 hover:shadow-xl hover:shadow-purple-200/50 hover:-translate-y-0.5"
             style={{ background: 'linear-gradient(135deg, var(--plum) 0%, var(--violet) 100%)' }}>
             <Mail size={15} /> Get in touch
           </a>
           <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer"
+            onClick={() => track('linkedin_click', { location: 'hero' })}
             className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold border transition-all duration-200 hover:-translate-y-0.5"
             style={{ color: 'var(--plum)', borderColor: 'rgba(91,75,138,0.3)', background: 'rgba(243,240,250,0.6)' }}>
             <LinkedInIcon size={15} /> LinkedIn
           </a>
           {showCv && (
-            <a href="/cv.pdf" download
+            <a href="/Suraj_Shetty_CV.pdf" download
+              onClick={() => track('cv_download', { location: 'hero' })}
               className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold border transition-all duration-200 hover:-translate-y-0.5"
               style={{ color: 'var(--text-secondary)', borderColor: 'rgba(107,107,118,0.22)', background: 'rgba(243,240,250,0.4)' }}>
               <FileText size={15} /> Download CV
@@ -135,9 +139,9 @@ export default function Hero({ showCv = false }: { showCv?: boolean }) {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.75, duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
-          className="flex flex-wrap gap-x-8 gap-y-4"
+          initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.65, duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }}
+          className="grid grid-cols-3 sm:flex sm:flex-wrap gap-x-4 sm:gap-x-8 gap-y-3"
         >
           {[
             { n: '7.5+', l: 'years' },
@@ -147,11 +151,11 @@ export default function Hero({ showCv = false }: { showCv?: boolean }) {
             { n: '50%', l: 'infra cost cut' },
             { n: '85%', l: 'faster onboarding' },
           ].map(({ n, l }) => (
-            <div key={l} className="flex items-baseline gap-2">
-              <span className="text-2xl font-display font-bold" style={{ background: 'linear-gradient(135deg, var(--plum), var(--violet))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+            <div key={l} className="flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-2">
+              <span className="text-xl sm:text-2xl font-display font-bold leading-none" style={{ background: 'linear-gradient(135deg, var(--plum), var(--violet))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
                 {n}
               </span>
-              <span className="text-xs font-medium" style={{ color: 'var(--text-secondary)' }}>{l}</span>
+              <span className="text-xs font-medium leading-none" style={{ color: 'var(--text-secondary)' }}>{l}</span>
             </div>
           ))}
         </motion.div>

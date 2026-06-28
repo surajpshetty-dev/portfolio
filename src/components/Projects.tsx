@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Tag, ArrowUpRight, Wrench, Zap, AlertCircle } from 'lucide-react';
+import { track } from '@vercel/analytics';
 import SectionHeader from './SectionHeader';
 import { projects, type Project, type Tag as TagType } from '@/data/projects';
 
@@ -225,7 +226,7 @@ export default function Projects() {
                 key={p.id}
                 project={p}
                 index={i}
-                onClick={() => setSelected(p)}
+                onClick={() => { setSelected(p); track('project_expand', { project: p.title }); }}
               />
             ))}
           </AnimatePresence>

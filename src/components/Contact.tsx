@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Mail, MapPin, ArrowUpRight, FileText, Copy, Check, X } from 'lucide-react';
 import LinkedInIcon from '@/components/icons/LinkedInIcon';
 import { SITE_EMAIL, LINKEDIN_URL } from '@/data/constants';
+import { track } from '@vercel/analytics';
 
 function CopyEmailButton() {
   const [copied, setCopied] = useState(false);
@@ -26,6 +27,7 @@ function CopyEmailButton() {
         document.body.removeChild(el);
         if (!ok) throw new Error('execCommand failed');
       }
+      track('email_copy');
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
@@ -98,6 +100,7 @@ export default function Contact({ showCv = false }: { showCv?: boolean }) {
                   href={LINKEDIN_URL}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => track('linkedin_click', { location: 'contact' })}
                   className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-medium text-white transition-all hover:-translate-y-0.5"
                   style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.25)' }}
                 >
@@ -117,8 +120,9 @@ export default function Contact({ showCv = false }: { showCv?: boolean }) {
               <div className="flex flex-wrap gap-3">
                 {showCv && (
                   <a
-                    href="/cv.pdf"
+                    href="/Suraj_Shetty_CV.pdf"
                     download
+                    onClick={() => track('cv_download', { location: 'contact' })}
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5"
                     style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.35)', color: 'white' }}
                   >
@@ -128,6 +132,7 @@ export default function Contact({ showCv = false }: { showCv?: boolean }) {
                 )}
                 <a
                   href={`mailto:${SITE_EMAIL}`}
+                  onClick={() => track('email_click', { location: 'contact' })}
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg"
                   style={{ background: 'rgba(255,255,255,0.95)', color: 'var(--plum)' }}
                 >

@@ -2,7 +2,7 @@ import { existsSync } from 'fs';
 import { join } from 'path';
 
 // Evaluated once per cold start — cv.pdf presence is fixed per deployment
-const CV_EXISTS = existsSync(join(process.cwd(), 'public', 'cv.pdf'));
+const CV_EXISTS = existsSync(join(process.cwd(), 'public', 'Suraj_Shetty_CV.pdf'));
 
 import Navigation from '@/components/Navigation';
 import Hero from '@/components/Hero';
